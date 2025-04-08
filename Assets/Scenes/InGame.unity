@@ -168,9 +168,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   layers: 5
   hexPrefabs:
-  - {fileID: 919132149155446097, guid: 810201c5870193d4dbcfb91ecd3b794e, type: 3}
-  - {fileID: 919132149155446097, guid: b2d8330ac1ad8f54991b868bf70f1a57, type: 3}
-  - {fileID: 919132149155446097, guid: 69c3cfa8eeb9319468154ce3ff2b0d22, type: 3}
+  - {fileID: 5489812714789051462, guid: f60f25b37ca14424da5341d2982320b3, type: 3}
+  - {fileID: 2630803403116834593, guid: 98902c22d04d4b44d95b093e14148f79, type: 3}
+  - {fileID: 6927238328180581559, guid: cba415db731f0a2438b800335dd94e7e, type: 3}
   obstaclePrefab: {fileID: 919132149155446097, guid: a858cee36d2c8804c919e70ca796da7d, type: 3}
   obstaclePrefab2: {fileID: 919132149155446097, guid: 8666815215cbdb24697d3408284a5842, type: 3}
 --- !u!1 &961008047
