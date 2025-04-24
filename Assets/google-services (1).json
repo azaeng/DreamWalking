@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "439503015454",
+    "project_id": "dreamwalking-12041",
+    "storage_bucket": "dreamwalking-12041.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:439503015454:android:0b954047bf7862343fa80f",
+        "android_client_info": {
+          "package_name": "com.company.DreamWalking"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCzj3aLXWQ999KS9SSA6sWc1yL56yYdImY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
