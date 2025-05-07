@@ -2,12 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HexagonalBoard : MonoBehaviour
+public class BoardFrame : MonoBehaviour
 {
     public int layers; // 겹 수 (인스펙터에서 조정 가능)
-    public GameObject[] hexPrefabs; // 육각형 오브젝트 프리팹 배열
-    public GameObject obstaclePrefab; // 장애물 오브젝트 프리팹
-    public GameObject obstaclePrefab2;
+    public GameObject board; // 육각형 오브젝트 프리팹 배열
+    public GameObject spawn;
+    public GameObject obstacle; // 장애물 오브젝트 프리팹
+    public GameObject obstacle2;
     private float hexRadius = 0.866f; // 육각형 변의 길이 (중심에서 변까지의 거리)
     private Dictionary<Vector3, GameObject> obstaclePositions = new Dictionary<Vector3, GameObject>(); // 장애물 위치 관리
 
@@ -37,16 +38,26 @@ public class HexagonalBoard : MonoBehaviour
             {
                 float x = xOffset + (i * 3f);
                 Vector3 position = new Vector3(x, 0, z);
-                GameObject hexPrefab = hexPrefabs[Random.Range(0, hexPrefabs.Length)]; // 랜덤 프리팹 선택
-                Instantiate(hexPrefab, position, Quaternion.identity, transform);
 
+                // 스폰 위치 조건
+                bool isSpawnPosition = ((floor == 3 && i == hexCount / 2) || (floor == 3+n-1 && i == 0) || (floor == 3+n-1 && i == hexCount-1) || (floor == maxFloor-n-1 && i == 0) || (floor == maxFloor-n-1 && i == hexCount-1) || (floor == maxFloor-2 && i == hexCount/2)); // 원하는 조건으로 수정 가능
+
+                if (isSpawnPosition)
+                {
+                    Instantiate(spawn, position, Quaternion.identity, transform);
+                }
+                else
+                {
+                    Instantiate(board, position, Quaternion.identity, transform);
+                }
+                
                 // 육각형의 각 변에 장애물 배치
                 PlaceObstacles(position, floor, n, i, hexCount);
             }
         }
     }
 
-    int GetHexCount(int floor, int n)
+    int GetHexCount(int floor, int n) // 보드 패턴 파악
     {
         if (floor <= n) return floor;                 // 증가 구간
         if (floor <= 3 * n + 1 && n % 2 == 0) return (floor % 2 == 0) ? n : n + 1; // 패턴 반복(짝수)
@@ -54,7 +65,7 @@ public class HexagonalBoard : MonoBehaviour
         if (floor <= 4 * n) return 4 * n + 2 - floor; // 감소 구간
         return 1; // 마지막 층 (4N+1층)
     }
-    void PlaceObstacles(Vector3 hexPosition, int floor, int n, int index, int hexCount)
+    void PlaceObstacles(Vector3 hexPosition, int floor, int n, int index, int hexCount) // 장애물 생성
     {
         // 육각형의 6개 변 좌표 계산
         Vector3[] obstacleOffsets = new Vector3[6]
@@ -92,29 +103,29 @@ public class HexagonalBoard : MonoBehaviour
 
             if (shouldCreateObstacle)
             {
-                GameObject selectedObstacle = obstaclePrefab;
+                GameObject selectedObstacle = this.obstacle;
 
                 // 1층 (좌측 아래, 아래, 우측 아래)
-                if (floor == 1 && (i == 4 || i == 3 || i == 2)) selectedObstacle = obstaclePrefab2;
+                if (floor == 1 && (i == 4 || i == 3 || i == 2)) selectedObstacle = obstacle2;
                 // 2 ~ n층 왼쪽(좌측 아래, 아래), 오른쪽(아래, 우측 아래)
-                else if (floor <= n && (index == 0 && (i == 4 || i == 3) || index == hexCount - 1 && (i == 3 || i == 2))) selectedObstacle = obstaclePrefab2;
+                else if (floor <= n && (index == 0 && (i == 4 || i == 3) || index == hexCount - 1 && (i == 3 || i == 2))) selectedObstacle = obstacle2;
                 // n+1층 왼쪽(좌측 위, 좌측 아래, 아래), 오른쪽(아래, 우측 아래, 우측 위)
-                else if (floor == n + 1 && (index == 0 && (i == 5 || i == 4 || i == 3) || index == hexCount - 1 && (i == 3 || i == 2 || i == 1))) selectedObstacle = obstaclePrefab2;
+                else if (floor == n + 1 && (index == 0 && (i == 5 || i == 4 || i == 3) || index == hexCount - 1 && (i == 3 || i == 2 || i == 1))) selectedObstacle = obstacle2;
                 // n+3층 ~ O-n-2층 왼쪽(좌측 아래, 아래), 오른쪽(아래, 우측 아래)
-                else if (floor >= n + 3 && floor <= maxFloor - n - 2 && (((n % 2 == 1 && floor % 2 == 0) || (n % 2 == 0 && floor % 2 == 1)) && (index == 0 && (i == 5 || i == 4) || index == hexCount - 1 && (i == 1 || i == 2)))) selectedObstacle = obstaclePrefab2;
+                else if (floor >= n + 3 && floor <= maxFloor - n - 2 && (((n % 2 == 1 && floor % 2 == 0) || (n % 2 == 0 && floor % 2 == 1)) && (index == 0 && (i == 5 || i == 4) || index == hexCount - 1 && (i == 1 || i == 2)))) selectedObstacle = obstacle2;
                 // O-n층 왼쪽(위, 좌측 위, 좌측 아래), 오른쪽(위, 우측 위, 우측 아래)
-                else if (floor == maxFloor - n && (index == 0 && (i == 0 || i == 5 || i == 4) || index == hexCount - 1 && (i == 0 || i == 1 || i == 2))) selectedObstacle = obstaclePrefab2;
+                else if (floor == maxFloor - n && (index == 0 && (i == 0 || i == 5 || i == 4) || index == hexCount - 1 && (i == 0 || i == 1 || i == 2))) selectedObstacle = obstacle2;
                 // O-n+1층 ~ O-1층 왼쪽(좌측 위, 위), 오른쪽(위, 우측 위)
-                else if (floor >= maxFloor - n + 1 && floor <= maxFloor - 1 && (index == 0 && (i == 5 || i == 0) || index == hexCount - 1 && (i == 0 || i == 1))) selectedObstacle = obstaclePrefab2;
+                else if (floor >= maxFloor - n + 1 && floor <= maxFloor - 1 && (index == 0 && (i == 5 || i == 0) || index == hexCount - 1 && (i == 0 || i == 1))) selectedObstacle = obstacle2;
                 // O층 (좌측 위, 위, 우측 위)
-                else if (floor == maxFloor) selectedObstacle = (i == 5 || i == 0 || i == 1) ? obstaclePrefab2 : obstaclePrefab;
+                else if (floor == maxFloor) selectedObstacle = (i == 5 || i == 0 || i == 1) ? obstacle2 : this.obstacle;
                 
                 // 장애물 생성
                 GameObject obstacle = Instantiate(selectedObstacle, obstaclePosition, Quaternion.Euler(0, obstacleRotations[i], 0), transform);
                 obstaclePositions[obstaclePosition] = obstacle; // 위치 저장
 
                 // obstaclePrefab인 경우만 삭제 후보에 추가
-                if (selectedObstacle == obstaclePrefab)
+                if (selectedObstacle == this.obstacle)
                 {
                     createdObstacles.Add(obstacle);
                 }

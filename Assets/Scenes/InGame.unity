@@ -167,12 +167,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   layers: 5
-  hexPrefabs:
-  - {fileID: 5489812714789051462, guid: f60f25b37ca14424da5341d2982320b3, type: 3}
-  - {fileID: 2630803403116834593, guid: 98902c22d04d4b44d95b093e14148f79, type: 3}
-  - {fileID: 6927238328180581559, guid: cba415db731f0a2438b800335dd94e7e, type: 3}
-  obstaclePrefab: {fileID: 919132149155446097, guid: a858cee36d2c8804c919e70ca796da7d, type: 3}
-  obstaclePrefab2: {fileID: 919132149155446097, guid: 8666815215cbdb24697d3408284a5842, type: 3}
+  board: {fileID: 963732551055008002, guid: 2d6546ba3aa929342a13851213c4fa5c, type: 3}
+  spawn: {fileID: 963732551055008002, guid: 01efc2a0aa596134a988fbf9003cf3bd, type: 3}
+  obstacle: {fileID: 5829322954978493013, guid: 78268c5eb66c29040adf59f4bc85d2e6, type: 3}
+  obstacle2: {fileID: 7618505828759988181, guid: 865b37dc45b6b114b948c8c6d89a6ff6, type: 3}
 --- !u!1 &961008047
 GameObject:
   m_ObjectHideFlags: 0
