@@ -2,16 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShopManager : MonoBehaviour
+public class UIManager : MonoBehaviour
 {
     public GameObject shopUI;
     public GameObject EnforceUI;
-
-    void Start()
-    {
-        shopUI.SetActive(false);
-        EnforceUI.SetActive(false);
-    }
+    public GameObject GameModeUI;
 
     void Update()
     {
@@ -24,14 +19,22 @@ public class ShopManager : MonoBehaviour
         {
             EnforceUI.SetActive(false);
         }
+        if(Input.GetKeyDown(KeyCode.Escape) && EnforceUI.activeSelf)
+        {
+            GameModeUI.SetActive(false);
+        }
     }
 
-    public void ToggleShop()
+    public void Shop()
     {
         shopUI.SetActive(!shopUI.activeSelf);
     }
-    public void ToggleEnforce()
+    public void Enforce()
     {
         EnforceUI.SetActive(!EnforceUI.activeSelf);
+    }
+    public void Game()
+    {
+        GameModeUI.SetActive(!GameModeUI.activeSelf);
     }
 }
