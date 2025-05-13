@@ -4,10 +4,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class LogInSystem : MonoBehaviour
+public class LogInManager : MonoBehaviour
 {
-    public InputField email;
+    public InputField id;
     public InputField password;
+    public GameObject CreateUI;
 
     // 로그인 상태 변화 출력용 텍스트
     // public Text outputText;
@@ -21,6 +22,14 @@ public class LogInSystem : MonoBehaviour
         FirebaseAuthManager.Instance.Init();
     }
 
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape) && CreateUI.activeSelf)
+        {
+            CreateUI.SetActive(false);
+        }
+    }
+
     // 로그인 상태 변화시 텍스트 업데이트
     //private void OnChangedState(bool sign)
     //{
@@ -30,21 +39,15 @@ public class LogInSystem : MonoBehaviour
 
     public void Create()
     {
-        SceneManager.LoadScene("JoinScene"); // 회원가입 화면으로 전환
-
-        // 아래는 실제 회원가입 시 호출하는 코드 예시 (JoinScene에서 사용할 수 있음)
-        //string e = email.text;
-        //string p = password.text;
-
-        //FirebaseAuthManager.Instance.Create(e, p);
+        CreateUI.SetActive(!CreateUI.activeSelf); // 회원가입 화면으로 전환
     }
 
     public void Login()
     {
-        FirebaseAuthManager.Instance.Login(email.text, password.text);
+        FirebaseAuthManager.Instance.Login(id.text, password.text);
 
         // 로그인 성공 시 전환할 씬 지정
-        // SceneManager.LoadScene("example");
+        SceneManager.LoadScene("Lobby");
     }
 
     public void LogOut()

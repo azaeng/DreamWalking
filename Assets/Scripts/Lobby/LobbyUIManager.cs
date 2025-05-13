@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UIManager : MonoBehaviour
+public class LobbyUIManager : MonoBehaviour
 {
     public GameObject shopUI;
     public GameObject EnforceUI;
@@ -19,7 +19,7 @@ public class UIManager : MonoBehaviour
         {
             EnforceUI.SetActive(false);
         }
-        if(Input.GetKeyDown(KeyCode.Escape) && EnforceUI.activeSelf)
+        if(Input.GetKeyDown(KeyCode.Escape) && GameModeUI.activeSelf)
         {
             GameModeUI.SetActive(false);
         }
