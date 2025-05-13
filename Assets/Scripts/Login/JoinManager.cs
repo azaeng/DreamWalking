@@ -1,13 +1,12 @@
-using Firebase.Database;
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Text.RegularExpressions; // 이메일 유효성 검사를 위한 정규표현식
 
 public class JoinManager : MonoBehaviour
 {
+    public GameObject CreateUI;
+    
     [SerializeField] private InputField idInputField;
     [SerializeField] private InputField passwordInputField;
     [SerializeField] private InputField confirmPasswordInputField;
@@ -30,7 +29,7 @@ public class JoinManager : MonoBehaviour
 
         if (!IsValidEmail(id))
         {
-            ShowWarning("이메일 형식을 확인해주세요. 예: aaa@aaaaa.com");
+            ShowWarning("이메일 형식을 확인해주세요. 예: ~~~@gmail.com");
             return;
         }
 
@@ -50,6 +49,8 @@ public class JoinManager : MonoBehaviour
         FirebaseAuthManager.Instance.Create(id, password);
         warningText.text = "회원가입에 성공하셨습니다.";
         warningText.color = Color.green;
+
+        CreateUI.SetActive(!CreateUI.activeSelf);
     }
 
     // 경고 메시지를 빨간색으로 출력
@@ -59,10 +60,10 @@ public class JoinManager : MonoBehaviour
         warningText.color = Color.red;
     }
 
-    // 이메일 형식 검사: @ 앞 최소 3자, @ 뒤 최소 5자, .com으로 끝나는지 확인
+    // 이메일 형식 검사: @ 앞 최소 1자, .com으로 끝나는지 확인
     private bool IsValidEmail(string email)
     {
-        string pattern = @"^[a-zA-Z0-9._%+-]{3,}@[a-zA-Z0-9.-]{5,}\.com$";
+        string pattern = @"^[a-zA-Z0-9._%+-]{1,}@gmail.com$";
         return Regex.IsMatch(email, pattern);
     }
 
@@ -70,11 +71,5 @@ public class JoinManager : MonoBehaviour
     private bool IsValidPassword(string password)
     {
         return password.Length >= 7;
-    }
-
-    // 닫기 버튼 클릭 시 로그인 화면으로 돌아가기
-    public void OnCloseButton()
-    {
-        SceneManager.LoadScene("SampleScene");
     }
 }

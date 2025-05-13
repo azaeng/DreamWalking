@@ -47,7 +47,7 @@ public class LogInManager : MonoBehaviour
         FirebaseAuthManager.Instance.Login(id.text, password.text);
 
         // 로그인 성공 시 전환할 씬 지정
-        SceneManager.LoadScene("Lobby");
+        SceneManager.LoadScene(1);
     }
 
     public void LogOut()

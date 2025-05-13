@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1088445393486",
+    "project_id": "dreamwalking-eea9d",
+    "storage_bucket": "dreamwalking-eea9d.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1088445393486:android:8706f432646dd5b398311f",
+        "android_client_info": {
+          "package_name": "com.WKU_CSE_TEAM.DreamWalking"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDt74th_2o8SIWvEDN9xNis5jN4-jHTslo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -91,7 +91,7 @@ public class ConnectManager : MonoBehaviourPunCallbacks
         if (PhotonNetwork.CurrentRoom.PlayerCount == 2 && PhotonNetwork.IsMasterClient)
         {
             // 모든 플레이어가 이 씬으로 이동하게 됨
-            PhotonNetwork.LoadLevel("InGame");
+            PhotonNetwork.LoadLevel(2);
         }
     }
 
