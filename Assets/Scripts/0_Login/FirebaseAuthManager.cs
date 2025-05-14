@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.Threading.Tasks;
 
 using Firebase.Auth;
 using Firebase.Firestore;
@@ -38,6 +39,7 @@ public class FirebaseAuthManager
     public void Init()
     {
         auth = FirebaseAuth.DefaultInstance;
+        db = FirebaseFirestore.DefaultInstance;
 
         // 현재 유저가 로그인된 상태라면 로그아웃 처리
         if (auth.CurrentUser != null)
@@ -73,26 +75,47 @@ public class FirebaseAuthManager
     }
 
     // 회원가입 요청
-    public void Create(string email, string password)
+    public void Create(string Id, string Pwd, string Nick, Action onSuccess, Action<string> onFailure)
     {
-        auth.CreateUserWithEmailAndPasswordAsync(email, password).ContinueWith(task =>
+        auth.CreateUserWithEmailAndPasswordAsync(Id, Pwd).ContinueWith(task =>
         {
-            if (task.IsCanceled)
+            if (task.IsCanceled || task.IsFaulted)
             {
-                Debug.LogError("회원가입이 취소되었습니다.");
-                return;
-            }
-            if (task.IsFaulted)
-            {
-                Debug.LogError("회원가입 실패: " + task.Exception?.Flatten().Message);
+                onFailure?.Invoke("회원가입 실패: " + task.Exception?.Flatten().Message);
                 return;
             }
 
-            AuthResult authResult = task.Result;
-            FirebaseUser user = authResult.User;
+            AuthResult result = task.Result;
+            user = result.User;
 
-            Debug.LogFormat("회원가입 성공: {0} ({1})", user.DisplayName, user.UserId);
+            // Firestore에 유저 정보 저장
+            Dictionary<string, object> userData = new Dictionary<string, object>
+            {
+                { "nickname", Nick },
+                { "level", 1 },
+                { "items", new List<string>() }
+            };
+
+            db.Collection("players").Document(user.UserId).SetAsync(userData).ContinueWith(setTask =>
+            {
+                if (setTask.IsCompleted)
+                {
+                    onSuccess?.Invoke();
+                }
+                else
+                {
+                    onFailure?.Invoke("DB 저장 실패: " + setTask.Exception?.Flatten().Message);
+                }
+            });
         });
+    }
+
+    // 닉네임 중복 검사
+    public async Task<bool> IsNicknameDuplicate(string Nick)
+    {
+        Query query = db.Collection("players").WhereEqualTo("nickname", Nick);
+        QuerySnapshot snapshot = await query.GetSnapshotAsync();
+        return snapshot.Count > 0;
     }
 
     // 로그인 요청
