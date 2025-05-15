@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -9,13 +7,13 @@ public class LoginManager : MonoBehaviour
     public InputField Id;
     public InputField Pwd;
     public GameObject CreateUI;
+    public Text warningText;
+    private bool LoginDone;
 
     void Start()
     {
-        // FirebaseAuthManager의 상태 변경 이벤트에 콜백 추가 (현재 미사용)
-        // FirebaseAuthManager.Instance.LoginState += OnChangedState;
-
         FirebaseAuthManager.Instance.Init();
+        LoginDone = false;
     }
 
     void Update()
@@ -23,6 +21,11 @@ public class LoginManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape) && CreateUI.activeSelf)
         {
             CreateUI.SetActive(false);
+        }
+        if(LoginDone)
+        {
+            LoginDone = false;
+            SceneManager.LoadScene(1);
         }
     }
 
@@ -33,11 +36,12 @@ public class LoginManager : MonoBehaviour
 
     public void Login()
     {
-        FirebaseAuthManager.Instance.Login(Id.text, Pwd.text);
-
-        // 로그인 성공 시 전환할 씬 지정
-        SceneManager.LoadScene(1);
+        FirebaseAuthManager.Instance.Login(Id.text, Pwd.text,
+            onSuccess: () => {LoginDone = true;},
+            onFailure: (error) => {LoginDone = false;}
+        );
     }
+
 
     public void LogOut()
     {

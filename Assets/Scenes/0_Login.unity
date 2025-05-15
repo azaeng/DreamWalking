@@ -3392,6 +3392,7 @@ MonoBehaviour:
   Id: {fileID: 1768984919}
   Pwd: {fileID: 252169739}
   CreateUI: {fileID: 385236319}
+  warningText: {fileID: 0}
 --- !u!1 &2119173821
 GameObject:
   m_ObjectHideFlags: 0
