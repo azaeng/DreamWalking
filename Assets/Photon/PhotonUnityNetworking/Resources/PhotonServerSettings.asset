@@ -41,6 +41,10 @@ MonoBehaviour:
   - RespawnSpaceship
   - ReceiveMyRandomNumber
   - RPC_SpawnEnemy
+  - SpawnObject
+  - NextTurn
+  - SetTurnOrder
+  - UpdateTurnIndex
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

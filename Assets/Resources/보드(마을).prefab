@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 438148068128225117}
   - component: {fileID: 4940236514670760461}
-  - component: {fileID: 5302222615966312795}
+  - component: {fileID: 5835970513910483548}
   m_Layer: 0
   m_Name: "\uBCF4\uB4DC(\uB9C8\uC744)"
   m_TagString: Untagged
@@ -57,7 +57,7 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
---- !u!114 &5302222615966312795
+--- !u!114 &5835970513910483548
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -74,7 +74,7 @@ MonoBehaviour:
   prefixField: -1
   Synchronization: 3
   OwnershipTransfer: 0
-  observableSearch: 2
+  observableSearch: 0
   ObservedComponents: []
   sceneViewId: 0
   InstantiationId: 0

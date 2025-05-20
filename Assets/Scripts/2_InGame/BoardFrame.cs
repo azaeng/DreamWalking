@@ -1,20 +1,25 @@
-using System.Collections;
+using Photon.Pun;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BoardFrame : MonoBehaviour
+public class BoardFrame : MonoBehaviourPunCallbacks
 {
     public int layers; // 겹 수 (인스펙터에서 조정 가능)
     public GameObject board; // 육각형 오브젝트 프리팹 배열
     public GameObject spawn;
     public GameObject obstacle; // 장애물 오브젝트 프리팹
     public GameObject obstacle2;
+
     private float hexRadius = 0.866f; // 육각형 변의 길이 (중심에서 변까지의 거리)
     private Dictionary<Vector3, GameObject> obstaclePositions = new Dictionary<Vector3, GameObject>(); // 장애물 위치 관리
 
     void Start()
     {
-        GenerateBoard(layers);
+        // 마스터 클라이언트만 보드 생성
+        if (PhotonNetwork.IsMasterClient)
+        {
+            GenerateBoard(layers);
+        }
     }
 
     void GenerateBoard(int n)
@@ -44,7 +49,7 @@ public class BoardFrame : MonoBehaviour
 
                 if (isSpawnPosition)
                 {
-                    Instantiate(spawn, position, Quaternion.identity, transform);
+                    PhotonNetwork.Instantiate("보드(마을)", position, Quaternion.identity);
                 }
                 else
                 {
@@ -119,9 +124,10 @@ public class BoardFrame : MonoBehaviour
                 else if (floor >= maxFloor - n + 1 && floor <= maxFloor - 1 && (index == 0 && (i == 5 || i == 0) || index == hexCount - 1 && (i == 0 || i == 1))) selectedObstacle = obstacle2;
                 // O층 (좌측 위, 위, 우측 위)
                 else if (floor == maxFloor) selectedObstacle = (i == 5 || i == 0 || i == 1) ? obstacle2 : this.obstacle;
-                
+
                 // 장애물 생성
-                GameObject obstacle = Instantiate(selectedObstacle, obstaclePosition, Quaternion.Euler(0, obstacleRotations[i], 0), transform);
+                string prefabName = selectedObstacle.name;
+                GameObject obstacle = PhotonNetwork.Instantiate(prefabName, obstaclePosition, Quaternion.Euler(0, obstacleRotations[i], 0));
                 obstaclePositions[obstaclePosition] = obstacle; // 위치 저장
 
                 // obstaclePrefab인 경우만 삭제 후보에 추가
@@ -145,7 +151,7 @@ public class BoardFrame : MonoBehaviour
         // 장애물 제거
         foreach (GameObject obj in obstaclesToRemove)
         {
-            Destroy(obj);
+            PhotonNetwork.Destroy(obj); // PhotonNetwork로 제거
             obstaclePositions.Remove(obj.transform.position);
         }
     }

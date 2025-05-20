@@ -1,66 +1,34 @@
-using Photon.Pun;
-using Photon.Realtime;
 using UnityEngine;
 using UnityEngine.UI;
-using ExitGames.Client.Photon; // <- 이거 꼭 필요함
+using Photon.Pun;
+using Photon.Realtime;
+using ExitGames.Client.Photon;
 
-public class NickNameManager : MonoBehaviourPunCallbacks
+public class NickNameManager : MonoBehaviour
 {
-    public Text logText;
+    public Text nicknameText;
 
-    private void Start()
+    void Start()
     {
-        if (PhotonNetwork.IsConnected && PhotonNetwork.InRoom)
+        string nickname = GetMyPhotonNickname();
+
+        if (!string.IsNullOrEmpty(nickname))
         {
-            AssignNickNames();
+            nicknameText.text = nickname;
         }
-    }
-
-    void AssignNickNames()
-    {
-        int counter = 0;
-        foreach (Player player in PhotonNetwork.PlayerList)
-        {
-            if (counter > 10) break;
-            string tempName = $"player{counter}";
-
-            if (PhotonNetwork.IsMasterClient)
-            {
-                if (!player.CustomProperties.ContainsKey("NickName"))
-                {
-                    Hashtable nickProp = new Hashtable { { "NickName", tempName } };
-                    player.SetCustomProperties(nickProp);
-                }
-            }
-
-            counter++;
-        }
-    }
-
-    public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
-    {
-        if (changedProps.ContainsKey("NickName"))
-        {
-            string nick = changedProps["NickName"].ToString();
-
-            if (targetPlayer == PhotonNetwork.LocalPlayer)
-            {
-                AppendLog($"[나] 닉네임 설정됨: {nick}");
-            }
-            else
-            {
-                AppendLog($"{targetPlayer.ActorNumber} 닉네임 설정됨: {nick}");
-            }
-        }
-    }
-
-
-     // 로그 출력
-    private void AppendLog(string message)
-    {
-        if (logText != null)
-            logText.text += message + "\n";
         else
-            Debug.LogWarning("LogText UI가 연결되지 않았습니다.");
+        {
+            nicknameText.text = "닉네임을 불러올 수 없습니다.";
+        }
+    }
+
+    private string GetMyPhotonNickname()
+    {
+        if (PhotonNetwork.LocalPlayer.CustomProperties.ContainsKey("nickname"))
+        {
+            return PhotonNetwork.LocalPlayer.CustomProperties["nickname"].ToString();
+        }
+
+        return null;
     }
 }

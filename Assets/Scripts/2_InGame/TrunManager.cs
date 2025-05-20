@@ -1,38 +1,104 @@
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections.Generic;
 
 public class TurnManager : MonoBehaviourPunCallbacks
 {
-    // 현재 방에 있는 플레이어 수를 저장할 변수
-    private int playerCount;
+    public Button endTurnButton; // 턴 종료 버튼
+    public Text turnInfoText;    // 현재 턴 표시용 UI
 
-    // 닉네임별로 랜덤 숫자를 저장할 딕셔너리
-    private Dictionary<string, int> playerRandomNumbers = new Dictionary<string, int>();
+    private List<Player> turnOrder = new List<Player>();
+    private int currentTurnIndex = 0;
 
     void Start()
     {
-        // 방에 있는 모든 플레이어 수를 세고 랜덤 숫자 부여
-        playerCount = PhotonNetwork.CurrentRoom.PlayerCount;
-        Debug.Log("현재 방에 있는 플레이어 수: " + playerCount);
+        endTurnButton.onClick.AddListener(OnEndTurnButtonClicked);
 
-        AssignRandomNumbersToNicknames();
+        if (PhotonNetwork.IsMasterClient)
+        {
+            GenerateTurnOrder();
+            photonView.RPC("SetTurnOrder", RpcTarget.AllBuffered, GetTurnOrderActorNumbers());
+        }
     }
 
-    // 각 닉네임에 랜덤 숫자 부여
-    private void AssignRandomNumbersToNicknames()
+    void OnEndTurnButtonClicked()
     {
-        foreach (Player player in PhotonNetwork.PlayerList)
+        if (PhotonNetwork.LocalPlayer.ActorNumber == turnOrder[currentTurnIndex].ActorNumber)
         {
-            int randomNumber = Random.Range(1, 101); // 1~100 사이의 랜덤 숫자
-            string nickname = player.NickName;
+            photonView.RPC("NextTurn", RpcTarget.AllBuffered);
+        }
+    }
 
-            if (!playerRandomNumbers.ContainsKey(nickname))
-            {
-                playerRandomNumbers[nickname] = randomNumber;
-                Debug.Log($"닉네임 '{nickname}'에게 랜덤 숫자 {randomNumber}를 부여했습니다.");
-            }
+    void GenerateTurnOrder()
+    {
+        List<Player> players = new List<Player>(PhotonNetwork.PlayerList);
+        while (players.Count > 0)
+        {
+            int randomIndex = Random.Range(0, players.Count);
+            turnOrder.Add(players[randomIndex]);
+            players.RemoveAt(randomIndex);
+        }
+    }
+
+    int[] GetTurnOrderActorNumbers()
+    {
+        int[] order = new int[turnOrder.Count];
+        for (int i = 0; i < turnOrder.Count; i++)
+        {
+            order[i] = turnOrder[i].ActorNumber;
+        }
+        return order;
+    }
+
+    [PunRPC]
+    void SetTurnOrder(int[] actorNumbers)
+    {
+        turnOrder.Clear();
+        foreach (int actorNumber in actorNumbers)
+        {
+            Player player = PhotonNetwork.CurrentRoom.GetPlayer(actorNumber);
+            if (player != null)
+                turnOrder.Add(player);
+        }
+        UpdateTurnUI();
+    }
+
+    [PunRPC]
+    void NextTurn()
+    {
+        currentTurnIndex = (currentTurnIndex + 1) % turnOrder.Count;
+        UpdateTurnUI();
+    }
+
+    void UpdateTurnUI()
+    {
+        if (turnInfoText != null)
+        {
+            Player currentPlayer = turnOrder[currentTurnIndex];
+            string playerName = GetPlayerNickname(currentPlayer);
+
+            bool isMyTurn = PhotonNetwork.LocalPlayer.ActorNumber == currentPlayer.ActorNumber;
+
+            turnInfoText.text = isMyTurn ? $"당신의 턴입니다 ({playerName})" : $"{playerName}의 턴입니다";
+
+            endTurnButton.interactable = isMyTurn;
+        }
+    }
+    string GetPlayerNickname(Player player)
+    {
+        if (player.CustomProperties.ContainsKey("nickname"))
+        {
+            return player.CustomProperties["nickname"].ToString();
+        }
+        else if (!string.IsNullOrEmpty(player.NickName))
+        {
+            return player.NickName;
+        }
+        else
+        {
+            return $"플레이어 {player.ActorNumber}";
         }
     }
 }
