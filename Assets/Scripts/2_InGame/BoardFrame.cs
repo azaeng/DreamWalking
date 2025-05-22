@@ -9,11 +9,10 @@ public class BoardFrame : MonoBehaviourPunCallbacks
     public GameObject spawn;    // 스폰 지점 프리팹
     public GameObject obstacle; // 장애물 프리팹
     public GameObject obstacle2;
-    public GameObject Player; // 인스펙터에서 캐릭터 프리팹 지정
 
     private float hexRadius = 0.866f; // 육각형 변의 길이 (중심에서 변까지의 거리)
     private Dictionary<Vector3, GameObject> obstaclePositions = new Dictionary<Vector3, GameObject>(); // 장애물 위치 관리
-    private List<Vector3> spawnPositions = new List<Vector3>(); // 스폰 위치 저장
+    public static List<Vector3> spawnPositions = new List<Vector3>(); // 스폰 위치 저장
 
     void Start()
     {
@@ -22,16 +21,14 @@ public class BoardFrame : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsMasterClient)
         {
             GenerateBoard(layers);
-
-            // 플레이어 스폰 처리
-            Photon.Realtime.Player[] players = PhotonNetwork.PlayerList;
-            for (int i = 0; i < players.Length && i < spawnPositions.Count; i++)
-            {
-                Vector3 spawnPos = spawnPositions[i] + Vector3.up * 0.5f; // 스폰 오브젝트 위
-                PhotonNetwork.Instantiate(Player.name, spawnPos, Quaternion.identity);
-            }
         }
     }
+
+    public List<Vector3> GetSpawnPositions()
+    {
+        return spawnPositions;
+    }
+
 
     void GenerateBoard(int n)
     {

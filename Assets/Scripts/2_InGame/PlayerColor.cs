@@ -5,14 +5,15 @@ public class PlayerColor : MonoBehaviourPun
 {
     void Start()
     {
-        // 로컬 플레이어만 빨간색으로 설정
-        if (photonView.IsMine)
+        Renderer renderer = GetComponentInChildren<Renderer>();
+
+        // 자신의 플레이어 오브젝트만 빨간색으로 설정
+        if (renderer != null)
         {
-            Renderer renderer = GetComponentInChildren<Renderer>();
-            if (renderer != null)
-            {
+            if (photonView.IsMine)
                 renderer.material.color = Color.red;
-            }
+            else
+                renderer.material.color = Color.white;
         }
     }
 }
