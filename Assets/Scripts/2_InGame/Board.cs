@@ -20,6 +20,10 @@ public class Board : MonoBehaviourPun
         // 무작위 프리팹 선택
         int index = Random.Range(0, objectPrefabs.Length);
         string prefabName = objectPrefabs[index].name;
+        // GameObject selectedPrefab = objectPrefabs[index];
+
+        // 새로운 오브젝트 생성
+        // Instantiate(selectedPrefab, currentPosition, currentRotation);
 
         // PhotonNetwork로 오브젝트 생성 (마스터 클라이언트일 때만)
         if (PhotonNetwork.IsMasterClient)

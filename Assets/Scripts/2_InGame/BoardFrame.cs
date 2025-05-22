@@ -5,20 +5,31 @@ using UnityEngine;
 public class BoardFrame : MonoBehaviourPunCallbacks
 {
     public int layers; // 겹 수 (인스펙터에서 조정 가능)
-    public GameObject board; // 육각형 오브젝트 프리팹 배열
-    public GameObject spawn;
-    public GameObject obstacle; // 장애물 오브젝트 프리팹
+    public GameObject board;    // 일반 보드 프리팹
+    public GameObject spawn;    // 스폰 지점 프리팹
+    public GameObject obstacle; // 장애물 프리팹
     public GameObject obstacle2;
+    public GameObject Player; // 인스펙터에서 캐릭터 프리팹 지정
 
     private float hexRadius = 0.866f; // 육각형 변의 길이 (중심에서 변까지의 거리)
     private Dictionary<Vector3, GameObject> obstaclePositions = new Dictionary<Vector3, GameObject>(); // 장애물 위치 관리
+    private List<Vector3> spawnPositions = new List<Vector3>(); // 스폰 위치 저장
 
     void Start()
     {
+        // GenerateBoard(layers);
         // 마스터 클라이언트만 보드 생성
         if (PhotonNetwork.IsMasterClient)
         {
             GenerateBoard(layers);
+
+            // 플레이어 스폰 처리
+            Photon.Realtime.Player[] players = PhotonNetwork.PlayerList;
+            for (int i = 0; i < players.Length && i < spawnPositions.Count; i++)
+            {
+                Vector3 spawnPos = spawnPositions[i] + Vector3.up * 0.5f; // 스폰 오브젝트 위
+                PhotonNetwork.Instantiate(Player.name, spawnPos, Quaternion.identity);
+            }
         }
     }
 
@@ -29,7 +40,9 @@ public class BoardFrame : MonoBehaviourPunCallbacks
         {
             Destroy(child.gameObject);
         }
+
         obstaclePositions.Clear(); // 기존 장애물 데이터 초기화
+        spawnPositions.Clear();    // 스폰 위치 초기화
 
         int maxFloor = 4 * n + 1; // 마지막 층
 
@@ -49,7 +62,9 @@ public class BoardFrame : MonoBehaviourPunCallbacks
 
                 if (isSpawnPosition)
                 {
+                    // Instantiate(spawn, position, Quaternion.identity, transform);
                     PhotonNetwork.Instantiate("보드(마을)", position, Quaternion.identity);
+                    spawnPositions.Add(position); // 스폰 위치 저장
                 }
                 else
                 {
@@ -88,11 +103,11 @@ public class BoardFrame : MonoBehaviourPunCallbacks
         List<GameObject> createdObstacles = new List<GameObject>(); // 생성된 장애물 리스트
         List<GameObject> obstaclesToRemove = new List<GameObject>(); // 제거할 장애물 리스트
         int removeCount = 0;
-
+        int maxFloor = 4 * n + 1; // 마지막 층
+        
         for (int i = 0; i < 6; i++)
         {
             Vector3 obstaclePosition = hexPosition + obstacleOffsets[i];
-            int maxFloor = 4 * n + 1; // 마지막 층
 
             // 장애물이 이미 존재하는지 확인 (0.1 거리 내에)
             bool shouldCreateObstacle = true;
@@ -128,6 +143,7 @@ public class BoardFrame : MonoBehaviourPunCallbacks
                 // 장애물 생성
                 string prefabName = selectedObstacle.name;
                 GameObject obstacle = PhotonNetwork.Instantiate(prefabName, obstaclePosition, Quaternion.Euler(0, obstacleRotations[i], 0));
+                // GameObject obstacle = Instantiate(selectedObstacle, obstaclePosition, Quaternion.Euler(0, obstacleRotations[i], 0), transform);
                 obstaclePositions[obstaclePosition] = obstacle; // 위치 저장
 
                 // obstaclePrefab인 경우만 삭제 후보에 추가
@@ -151,8 +167,9 @@ public class BoardFrame : MonoBehaviourPunCallbacks
         // 장애물 제거
         foreach (GameObject obj in obstaclesToRemove)
         {
+            Destroy(obj);
             PhotonNetwork.Destroy(obj); // PhotonNetwork로 제거
-            obstaclePositions.Remove(obj.transform.position);
+            // obstaclePositions.Remove(obj.transform.position);
         }
     }
 }
