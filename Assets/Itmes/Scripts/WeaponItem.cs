@@ -4,7 +4,7 @@ using UnityEngine;
 
 // 무기(장비아이템) 정보를 담는 스크립터블 오브젝트
 [CreateAssetMenu(fileName = "Weapon", menuName = "Item/Weapon")]
-public class WeaponItem : Item
+public class WeaponItem : Items
 {
     // 무기 타입
     [SerializeField] private EnumTypes.WP_TYPE wpType;

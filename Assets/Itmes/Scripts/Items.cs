@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // 아이템 스크립터블 오브젝트
-public class Item : ScriptableObject
+public class Items : ScriptableObject
 {
     // 아이템 타입
     [SerializeField] private EnumTypes.ITEM_TYPE itemType;
@@ -32,9 +32,9 @@ public class Item : ScriptableObject
     public int ItemPrice { get => itemPrice; set => itemPrice = value; }
 
     // 아이템 복사
-    public Item Clone()
+    public Items Clone()
     {
-        Item newItem = Instantiate(this);
+        Items newItem = Instantiate(this);
         return newItem;
     }
 }

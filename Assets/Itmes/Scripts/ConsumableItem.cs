@@ -4,7 +4,7 @@ using UnityEngine;
 
 // 소비품 아이템 스크립트 오브젝트
 [CreateAssetMenu(fileName = "Consumable", menuName = "Item/ConsumableItem")]
-public class ConsumableItem : Item
+public class ConsumableItem : Items
 {
     // 소비품 종류
     [SerializeField] private EnumTypes.CB_TYPE cbType;

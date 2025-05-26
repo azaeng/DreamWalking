@@ -4,22 +4,27 @@ using UnityEngine;
 
 public class LobbyUIManager : MonoBehaviour
 {
-    public GameObject shopUI;
+    public GameObject ShopUI;
     public GameObject EnforceUI;
+    public GameObject StorageUI;
     public GameObject GameModeUI;
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && shopUI.activeSelf)
+        if (Input.GetKeyDown(KeyCode.Escape) && ShopUI.activeSelf)
         {
-            shopUI.SetActive(false);
+            ShopUI.SetActive(false);
         }
 
         if(Input.GetKeyDown(KeyCode.Escape) && EnforceUI.activeSelf)
         {
             EnforceUI.SetActive(false);
         }
-        if(Input.GetKeyDown(KeyCode.Escape) && GameModeUI.activeSelf)
+        if(Input.GetKeyDown(KeyCode.Escape) && StorageUI.activeSelf)
+        {
+            StorageUI.SetActive(false);
+        }
+        if (Input.GetKeyDown(KeyCode.Escape) && GameModeUI.activeSelf)
         {
             GameModeUI.SetActive(false);
         }
@@ -27,11 +32,15 @@ public class LobbyUIManager : MonoBehaviour
 
     public void Shop()
     {
-        shopUI.SetActive(!shopUI.activeSelf);
+        ShopUI.SetActive(!ShopUI.activeSelf);
     }
     public void Enforce()
     {
         EnforceUI.SetActive(!EnforceUI.activeSelf);
+    }
+    public void Storage()
+    {
+        StorageUI.SetActive(!StorageUI.activeSelf);
     }
     public void Game()
     {
