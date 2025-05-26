@@ -2,15 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// EnumÅ¸ÀÔ Á¤ÀÇ
+// Enum íƒ€ì… ì •ì˜
 public class EnumTypes : MonoBehaviour
 {
-    // ¾ÆÀÌÅÛ Å¸ÀÔ(¹«±â, ¼Ò¸ğÇ°)
+    // ì•„ì´í…œ íƒ€ì… (ë¬´ê¸°, ì†Œë¹„í’ˆ)
     public enum ITEM_TYPE { WP, CB }
 
-    // ¹«±â Å¸ÀÔ
+    // ë¬´ê¸° íƒ€ì…
     public enum WP_TYPE { MELEE, ARMOR }
 
-    // ¼Ò¸ğ¼º ¾ÆÀÌÅÛ Å¸ÀÔ
+    // ì†Œë¹„í’ˆ íƒ€ì…
     public enum CB_TYPE { S_HP_UP, M_HP_UP, L_HP_UP }
 }

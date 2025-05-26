@@ -2,38 +2,38 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// ¼Ò¸ğ¼º ¾ÆÀÌÅÛ ½ºÅ©¸³ÅÍºí ¿ÀºêÁ§Æ®
+// ì†Œë¹„í’ˆ ì•„ì´í…œ ìŠ¤í¬ë¦½íŠ¸ ì˜¤ë¸Œì íŠ¸
 [CreateAssetMenu(fileName = "Consumable", menuName = "Item/ConsumableItem")]
 public class ConsumableItem : Item
 {
-    // ¼Ò¸ğ¼º ¾ÆÀÌÅÛ Å¸ÀÔ
+    // ì†Œë¹„í’ˆ ì¢…ë¥˜
     [SerializeField] private EnumTypes.CB_TYPE cbType;
 
-    // ¾ÆÀÌÅÛ ¼öÄ¡
+    // ì¦ê°€ ê°’
     [SerializeField] private int upValue;
 
-    // HPÆ÷¼Ç ÇÁ¸®ÆÕ
+    // HP í¬ì…˜ í”„ë¦¬íŒ¹ ë°°ì—´
     [SerializeField] private GameObject[] hpPosion;
 
     protected EnumTypes.CB_TYPE CbType { get => cbType; set => cbType = value; }
     protected int UpValue { get => upValue; set => upValue = value; }
     public GameObject[] HpPosion { get => hpPosion; set => hpPosion = value; }
 
-    // ÃÊ±Şhp ¾ÆÀÌÅÛ ¼Ò¸ğ Ã³¸® ±â´É ¸Ş¼­µå
+    // ì†ŒëŸ‰ HP íšŒë³µ ì†Œë¹„ í•¨ìˆ˜
     public virtual void SConsume()
     {
-        Debug.Log($"{itemName}À» »ç¿ëÇß½À´Ï´Ù.");
+        Debug.Log($"{itemName}ì„(ë¥¼) ì‚¬ìš©í–ˆìŠµë‹ˆë‹¤.");
     }
 
-    // Áß°£ hp Æ÷¼Ç ¼Ò¸ğ Ã³¸® ±â´É ¸Ş¼­µå
+    // ì¤‘ëŸ‰ HP íšŒë³µ ì†Œë¹„ í•¨ìˆ˜
     public virtual void MConsume()
     {
-        Debug.Log($"{itemName}À» »ç¿ëÇß½À´Ï´Ù.");
+        Debug.Log($"{itemName}ì„(ë¥¼) ì‚¬ìš©í–ˆìŠµë‹ˆë‹¤.");
     }
 
-    // ´ë·®ÀÇ hp Æ÷¼Ç ¼Ò¸ğ Ã³¸® ±â´É ¸Ş¼­µå
+    // ëŒ€ëŸ‰ HP íšŒë³µ ì†Œë¹„ í•¨ìˆ˜
     public virtual void LConsume()
     {
-        Debug.Log($"{itemName}À» »ç¿ëÇß½À´Ï´Ù.");
+        Debug.Log($"{itemName}ì„(ë¥¼) ì‚¬ìš©í–ˆìŠµë‹ˆë‹¤.");
     }
 }

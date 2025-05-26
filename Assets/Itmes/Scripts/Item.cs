@@ -2,24 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// ¾ÆÀÌÅÛ ½ºÅ©¸³ÅÍºí ¿ÀºêÁ§Æ®
+// ì•„ì´í…œ ìŠ¤í¬ë¦½í„°ë¸” ì˜¤ë¸Œì íŠ¸
 public class Item : ScriptableObject
 {
-    // ¾ÆÀÌÅÛ Å¸ÀÔ
+    // ì•„ì´í…œ íƒ€ì…
     [SerializeField] private EnumTypes.ITEM_TYPE itemType;
-    // ¾ÆÀÌÅÛ ¾ÆÀÌµğ
+    // ì•„ì´í…œ ì•„ì´ë””
     [SerializeField] protected int itemId;
-    // ¾ÆÀÌÅÛ ÀÌ¸§
+    // ì•„ì´í…œ ì´ë¦„
     [SerializeField] protected string itemName;
-    // ¾ÆÀÌÅÛ ¼³¸í
+    // ì•„ì´í…œ ì„¤ëª…
     [SerializeField] protected string itemDescription;
-    // ¾ÆÀÌÅÛ ¾ÆÀÌÄÜ ÀÌ¹ÌÁö
+    // ì•„ì´í…œ ì•„ì´ì½˜ ì´ë¯¸ì§€
     [SerializeField] protected Sprite itemIconIamge;
-    // ¾ÆÀÌÅÛ °¡°İ
+    // ì•„ì´í…œ ê°€ê²©
     [SerializeField] protected int itemPrice;
-    // ¾ÆÀÌÅÛ °¹¼ö
+    // ì•„ì´í…œ ìˆ˜ëŸ‰
     [SerializeField] private int itemCount;
-    // ¾ÆÀÌÅÛ Âø¿ë
+    // ì•„ì´í…œ ì¥ì°© ì—¬ë¶€
     [SerializeField] private bool isEquip;
 
     public EnumTypes.ITEM_TYPE ItemType { get => itemType; set => itemType = value; }
@@ -31,7 +31,7 @@ public class Item : ScriptableObject
     public Sprite ItemIconIamge { get => itemIconIamge; set => itemIconIamge = value; }
     public int ItemPrice { get => itemPrice; set => itemPrice = value; }
 
-    // ¾ÆÀÌÅÛ º¹Á¦
+    // ì•„ì´í…œ ë³µì‚¬
     public Item Clone()
     {
         Item newItem = Instantiate(this);

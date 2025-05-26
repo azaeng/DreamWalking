@@ -2,19 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// ¹«±â(±ÙÁ¢¹«±â) ¾ÆÀÌÅÛ ½ºÅ©¸³ÅÍºí ¿ÀºêÁ§Æ®
+// ë¬´ê¸°(ìž¥ë¹„ì•„ì´í…œ) ì •ë³´ë¥¼ ë‹´ëŠ” ìŠ¤í¬ë¦½í„°ë¸” ì˜¤ë¸Œì íŠ¸
 [CreateAssetMenu(fileName = "Weapon", menuName = "Item/Weapon")]
 public class WeaponItem : Item
 {
-    // ¹«±â Á¾·ù
+    // ë¬´ê¸° íƒ€ìž…
     [SerializeField] private EnumTypes.WP_TYPE wpType;
-    // °ø°Ý ¼Óµµ
+    // ê³µê²© ì†ë„
     [SerializeField] protected float attackSpeed;
-    // °ø°Ý µ¥¹ÌÁö
+    // ë¬´ê¸° ë°ë¯¸ì§€
     [SerializeField] protected int damage;
-    // ¹«±â ÀåÂø ºÎ¸ð ÅÂ±×
+    // ë¬´ê¸° ìž¥ì°© ë¶€ëª¨ ì˜¤ë¸Œì íŠ¸ íƒœê·¸
     [SerializeField] protected string equipParentTag;
-    // ¹«±â ÇÁ¸®ÆÕ
+    // ë¬´ê¸° í”„ë¦¬íŒ¹ë“¤
     [SerializeField] private GameObject[] wpPrefabs;
 
     public EnumTypes.WP_TYPE WpType { get => wpType; set => wpType = value; }

@@ -4,30 +4,30 @@ using UnityEngine;
 
 public class EquipmentSystem : MonoBehaviour
 {
-    // ±ÙÁ¢ ÀåÂø ¾ÆÀÌÅÛ
+    // í˜„ì¬ ì¥ì°© ë¬´ê¸° ì•„ì´í…œ
     [SerializeField] private WeaponItem meleeWeaponItem;
-    // °©¿Ê ÀåÂø ¾ÆÀÌÅÛ
+    // í˜„ì¬ ì¥ì°© ë°©ì–´êµ¬ ì•„ì´í…œ
     [SerializeField] private WeaponItem amorWeaponItem;
-    // ±ÙÁ¢ ¹«±â ÀåÂø À§Ä¡
+    // ê·¼ì ‘ ë¬´ê¸° ì¥ì°© ìœ„ì¹˜
     [SerializeField] private Transform leftMeleeWeaponPosition;
     [SerializeField] private Transform rightMeleeWeaponPosition;
-    // ±ÙÁ¢ ¹«±â °ÔÀÓ ¿ÀºêÁ§Æ® ÂüÁ¶
+    // ì¥ì°©ëœ ê·¼ì ‘ ë¬´ê¸° ê²Œì„ì˜¤ë¸Œì íŠ¸ ì°¸ì¡°
     [SerializeField] private GameObject leftMeleeWeapon;
     [SerializeField] private GameObject rightMeleeWeapon;
-    // °©¿Ê ÀåÂø À§Ä¡
+    // ë°©ì–´êµ¬ ì¥ì°© ìœ„ì¹˜
     [SerializeField] private Transform armorWeaponPosition;
-    // °©¿Ê Àåºñ °ÔÀÓ ¿ÀºêÁ§Æ® ÂüÁ¶
+    // ì¥ì°©ëœ ë°©ì–´êµ¬ ê²Œì„ì˜¤ë¸Œì íŠ¸ ì°¸ì¡°
     [SerializeField] private GameObject armorWeapon;
 
-    // ½ÃÀÛ ½Ã ÀåÂøÇÏ°í ÀÖÀ» ¾ÆÀÌÅÛ Á¤º¸
+    // ì‹œì‘ ì‹œ ì¥ì°©í•  ë¬´ê¸° ì•„ì´í…œ ì •ë³´
     [SerializeField] private ItemInfo startWeaponItemInfo;
 
     public ItemInfo StartWeaponItemInfo { get => startWeaponItemInfo; set => startWeaponItemInfo = value; }
 
-    // ÀÎº¥Åä¸® ½Ã½ºÅÛ ÄÄÆ÷³ÍÆ®
+    // ì¸ë²¤í† ë¦¬ ì‹œìŠ¤í…œ ì°¸ì¡°
     // [SerializeField] private InventorySystem inventorySystem;
 
-    // ÀåÂøµÈ ¹«±âÀÇ µ¥¹ÌÁö¸¦ ¹İÈ¯
+    // í˜„ì¬ ì¥ì°© ë¬´ê¸°ì˜ ê³µê²©ë ¥ì„ ë°˜í™˜
     public int GetEquipWPDamage()
     {
         if (meleeWeaponItem != null)
@@ -38,13 +38,13 @@ public class EquipmentSystem : MonoBehaviour
         return 0;
     }
 
-    // ¹«±â/°©¿Ê ¾ÆÀÌÅÛ ÀåÂø Ã³¸®
+    // ë¬´ê¸°/ë°©ì–´êµ¬ ì•„ì´í…œ ì¥ì°© ì²˜ë¦¬
     public void EquipWeaponItem(WeaponItem weaponItem)
     {
-        // ÀåÂøÇÏ·Á´Â ¾ÆÀÌÅÛÀÌ ¹«±â Àåºñ ¾ÆÀÌÅÛÀÏ °æ¿ì
+        // ê·¼ì ‘ë¬´ê¸° íƒ€ì…ì¼ ê²½ìš°
         if (weaponItem.WpType == EnumTypes.WP_TYPE.MELEE)
         {
-            // ÀÌÀü¿¡ ÀåÂøÇÑ ¹«±âÀåºñ¸¦ ÀåÂø ÇØÁ¦ Ã³¸®ÇÔ
+            // ê¸°ì¡´ ì¥ì°©ëœ ë¬´ê¸°ê°€ ìˆë‹¤ë©´ ë¨¼ì € ì œê±° ì²˜ë¦¬
             if (meleeWeaponItem != null)
             {
                 if (leftMeleeWeapon != null)
@@ -59,16 +59,16 @@ public class EquipmentSystem : MonoBehaviour
                     rightMeleeWeapon = null;
                 }
 
-                // ÀåÂø ÇØÁ¦ÇÑ ¾ÆÀÌÅÛÀÇ ÀåÂø À¯¹«¸¦ ÇØÁ¦ »óÅÂ·Î ¼³Á¤
+                // ê¸°ì¡´ ë¬´ê¸°ì˜ ì¥ì°© ìƒíƒœë¥¼ í•´ì œ
                 meleeWeaponItem.IsEquip = false;
-                Debug.Log($"[{meleeWeaponItem.ItemId}] {meleeWeaponItem.ItemName} ¹«±â°¡ ÀåÂøÀÌ ÇØÁ¦µÊ");
+                Debug.Log($"[{meleeWeaponItem.ItemId}] {meleeWeaponItem.ItemName} ë¬´ê¸°ê°€ ì¥ì°© í•´ì œë¨");
             }
 
-            // »õ·Î¿î ¹«±â Àåºñ ¾ÆÀÌÅÛÀÇ ÀåÂø À¯¹«¸¦ ÀåÂø»óÅÂ·Î ¼³Á¤
+            // ìƒˆë¡œìš´ ë¬´ê¸°ë¥¼ í˜„ì¬ ë¬´ê¸°ë¡œ ì„¤ì •í•˜ê³  ì¥ì°© ìƒíƒœë¡œ ë³€ê²½
             meleeWeaponItem = weaponItem;
             meleeWeaponItem.IsEquip = true;
 
-            // ÇØ´ç ¾ÆÀÌÅÛÀÇ ½ÇÁúÀûÀÎ ¹«±â °ÔÀÓ ¿ÀºêÁ§Æ®¸¦ ÁöÁ¤ÇÑ ¹«±â ÀåÂø À§Ä¡¿¡ »ı¼ºÇÔ
+            // í•´ë‹¹ ë¬´ê¸°ì˜ í”„ë¦¬íŒ¹ì„ ì† ìœ„ì¹˜ì— ì¸ìŠ¤í„´ìŠ¤í™”í•˜ì—¬ ì¥ì°©
             if (meleeWeaponItem.WpPrefabs.Length > 1)
             {
                 leftMeleeWeapon = Instantiate(meleeWeaponItem.WpPrefabs[0], leftMeleeWeaponPosition);
@@ -82,7 +82,7 @@ public class EquipmentSystem : MonoBehaviour
         }
         else
         {
-            // ÀÌÀü¿¡ ÀåÂøÇÑ Åõ±¸¸¦ ÀåÂø ÇØÁ¦ Ã³¸®ÇÔ
+            // ê¸°ì¡´ ì¥ì°©ëœ ë°©ì–´êµ¬ê°€ ìˆë‹¤ë©´ ì œê±° ì²˜ë¦¬
             if (amorWeaponItem != null)
             {
                 if (armorWeapon != null)
@@ -92,30 +92,31 @@ public class EquipmentSystem : MonoBehaviour
                 }
 
                 amorWeaponItem.IsEquip = false;
-                Debug.Log($"[{amorWeaponItem.ItemId}] {amorWeaponItem.ItemName} °©¿Ê ÀåÂøÀÌ ÇØÁ¦µÊ");
+                Debug.Log($"[{amorWeaponItem.ItemId}] {amorWeaponItem.ItemName} ë°©ì–´êµ¬ê°€ í•´ì œë¨");
             }
 
-            // »õ·Î ÀåÂøÇÒ Åõ±¸ ¾ÆÀÌÅÛ ¼³Á¤
+            // ìƒˆë¡œìš´ ë°©ì–´êµ¬ë¥¼ í˜„ì¬ ë°©ì–´êµ¬ë¡œ ì„¤ì •
             amorWeaponItem = weaponItem;
-            // »õ·Î ÀåÂøÇÒ Çï¸ä ¾ÆÀÌÅÛÀ» ÀåÂø »óÅÂ·Î º¯°æ
+            // ìƒˆë¡œìš´ ë°©ì–´êµ¬ì˜ ì¥ì°© ìƒíƒœë¥¼ trueë¡œ ì„¤ì •
             amorWeaponItem.IsEquip = true;
-            // Åõ±¸ °ÔÀÓ ¿ÀºêÁ§Æ® »ı¼º ÈÄ ÇÃ·¹ÀÌ¾îÀÇ ¸Ó¸®¿¡ ÀåÂø
+            // ë°©ì–´êµ¬ í”„ë¦¬íŒ¹ì„ ìƒì„±í•´ í”Œë ˆì´ì–´ì˜ ìœ„ì¹˜ì— ì¥ì°©
             armorWeapon = Instantiate(amorWeaponItem.WpPrefabs[0], armorWeaponPosition);
 
-            Debug.Log($"[{amorWeaponItem.ItemId}] {amorWeaponItem.ItemName} °©¿ÊÀ» {amorWeaponItem.EquipParentTag} À§Ä¡¿¡ ÀåÂø µÊ");
+
+            Debug.Log($"[{amorWeaponItem.ItemId}] {amorWeaponItem.ItemName} ë°©ì–´êµ¬ê°€ {amorWeaponItem.EquipParentTag} ìœ„ì¹˜ì— ì¥ì°©ë¨");
         }
     }
 
-    // Àåºñ ÀåÂøÀ» ÇØÁ¦ÇÔ (ÇØÁ¦ÇÒ ÀåÂø ¾ÆÀÌÅÛ)
+    // ë¬´ê¸° ì¥ì°© í•´ì œ (ì¸ë²¤í† ë¦¬ë¡œ ë˜ëŒë¦¬ê¸°)
     public void UnEquipWeaponItem(WeaponItem weaponItem)
     {
-        // ÀåÂøÇÏ·Á´Â ¾ÆÀÌÅÛÀÌ ¹«±â ÀåÂø ¾ÆÀÌÅÛÀÏ °æ¿ì
+        // ê·¼ì ‘ ë¬´ê¸°ì¼ ê²½ìš°
         if (weaponItem.WpType == EnumTypes.WP_TYPE.MELEE)
         {
-            // Ä³¸¯ÅÍ°¡ ÀåÂøÇÑ ¹«±â ¾ÆÀÌÅÛÀÌ Á¸ÀçÇÑ´Ù¸é
+            // ìºë¦­í„°ê°€ ê·¼ì ‘ ë¬´ê¸°ë¥¼ ì¥ì°© ì¤‘ì´ë¼ë©´
             if (meleeWeaponItem != null)
             {
-                // ÀåÂøµÈ ¹«±â Àåºñ¸¦ ÆÄ±«ÇÔ (ÀåÂø ÇØÁ¦)
+                // ì¥ì°©ëœ ë¬´ê¸° ì œê±° (ì–‘ì†)
                 if (leftMeleeWeapon != null)
                 {
                     Destroy(leftMeleeWeapon);
@@ -128,29 +129,29 @@ public class EquipmentSystem : MonoBehaviour
                     rightMeleeWeapon = null;
                 }
 
-                // ÀåÂøµÈ ¾ÆÀÌÅÛÀ» ÀåÂø ÇØÁ¦ »óÅÂ·Î º¯°æÇÔ
+                // ë¬´ê¸° ì¥ì°© ìƒíƒœ í•´ì œ
                 meleeWeaponItem.IsEquip = false;
-                Debug.Log($"ÀåÂøµÈ [{meleeWeaponItem.ItemId}] {meleeWeaponItem.ItemName} ¹«±âÀÇ ÀåÂøÀÌ ÇØÁ¦µÊ");
-                meleeWeaponItem = null; // ÀåÂøÇÑ ¹«±â ¾ÆÀÌÅÛÀÌ ¾øÀ½À¸·Î ¼³Á¤ÇÔ
+                Debug.Log($"ë¬´ê¸° [{meleeWeaponItem.ItemId}] {meleeWeaponItem.ItemName} ì¥ì°©ì´ í•´ì œë¨");
+                meleeWeaponItem = null; // í˜„ì¬ ì¥ì°©ëœ ë¬´ê¸°ë¥¼ ì¥ì°© í•´ì œí•œë‹¤
             }
         }
 
         else
         {
-            // Ä³¸¯ÅÍ°¡ ÀåÂøÇÑ °©¿Ê(Çï¸ä) ¾ÆÀÌÅÛÀÌ Á¸ÀçÇÑ´Ù¸é
+            // ìºë¦­í„°ê°€ ë°©ì–´êµ¬ë¥¼ ì¥ì°© ì¤‘ì´ë¼ë©´
             if (armorWeapon != null)
             {
-                // ÀåÂøµÈ Çï¸äÀ» ÆÄ±«ÇÔ (ÀåÂø ÇØÁ¦)
+                // ì¥ì°©ëœ ë°©ì–´êµ¬ ì œê±°
                 if (armorWeapon != null)
                 {
                     Destroy(armorWeapon);
                     armorWeapon = null;
                 }
 
-                // ÇöÀç ¾ÆÀÌÅÛÀ» ÀåÂø ÇØÁ¦ »óÅÂ·Î º¯°æÇÔ
+                // ë°©ì–´êµ¬ ì¥ì°© ìƒíƒœ í•´ì œ
                 amorWeaponItem.IsEquip = false;
-                Debug.Log($"[{amorWeaponItem.ItemId}] {amorWeaponItem.ItemName} °©¿Ê ÀåÂøÀÌ ÇØÁ¦µÊ");
-                amorWeaponItem = null; // ÀåÂøµÈ °©¿Ê ¾ÆÀÌÅÛÀÌ ¾øÀ½À¸·Î ¼³Á¤ÇÔ
+                Debug.Log($"[{amorWeaponItem.ItemId}] {amorWeaponItem.ItemName} ë°©ì–´êµ¬ê°€ í•´ì œë¨");
+                amorWeaponItem = null; // í˜„ì¬ ì¥ì°© ì¤‘ì¸ ì¥ë¹„ë¥¼ í•´ì œí•œë‹¤
             }
         }
     }

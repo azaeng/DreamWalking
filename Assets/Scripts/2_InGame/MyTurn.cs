@@ -14,8 +14,6 @@ public class MyTurn : MonoBehaviourPun
 
     private Animator DiceAni_1; // 애니메이터
     private Animator DiceAni_2;
-    RectTransform rt1; // 주사위 위치
-    RectTransform rt2;
     private int dice1Value;
     private int dice2Value;
 
@@ -31,10 +29,6 @@ public class MyTurn : MonoBehaviourPun
             DiceAni_1 = Dice_1.GetComponent<Animator>();
             DiceAni_2 = Dice_2.GetComponent<Animator>();
         }
-
-        // RectTransform을 통해 위치 초기화
-        rt1 = Dice_1.GetComponent<RectTransform>();
-        rt2 = Dice_2.GetComponent<RectTransform>();
 
         // 시작 시 애니메이터 비활성화
         DiceAni_1.enabled = false;
@@ -53,8 +47,18 @@ public class MyTurn : MonoBehaviourPun
 
         Obstacle.ResetObstacleRemovalFlag();
 
-        if (rt1 != null) rt1.anchoredPosition = new Vector2(rt1.anchoredPosition.x, -300f);
-        if (rt2 != null) rt2.anchoredPosition = new Vector2(rt2.anchoredPosition.x, -300f);
+        // 주사위 위치 초기화
+        if (Dice_1 != null)
+        {
+            Vector3 pos = Dice_1.rectTransform.anchoredPosition;
+            Dice_1.rectTransform.anchoredPosition = new Vector2(pos.x, -300f);
+        }
+
+        if (Dice_2 != null)
+        {
+            Vector3 pos = Dice_2.rectTransform.anchoredPosition;
+            Dice_2.rectTransform.anchoredPosition = new Vector2(pos.x, -300f);
+        }
     }
 
     void Rolling()
@@ -65,8 +69,8 @@ public class MyTurn : MonoBehaviourPun
             DiceAni_1.enabled = true;
             DiceAni_2.enabled = true;
 
-            DiceAni_1.Play("주사위 1", 0, 0f); // 애니메이션 처음부터 재생
-            DiceAni_2.Play("주사위 2", 0, 0f);
+            // DiceAni_1.Play("Dice 1", 0, 0f); // 애니메이션 처음부터 재생
+            // DiceAni_2.Play("Dice 2", 0, 0f);
         }
 
         // 랜덤 숫자 생성 (1~6)

@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// ¾ÆÀÌÅÛ ¸ñ·Ï(DB) ½ºÅ©¸³ÅÍºí ¿ÀºêÁ§Æ®
+// ì•„ì´í…œ ë°ì´í„°(DB)ë¥¼ ë‹´ëŠ” ìŠ¤í¬ë¦½í„°ë¸” ì˜¤ë¸Œì íŠ¸
 [CreateAssetMenu(fileName = "ItemList", menuName = "Item/ItemList")]
 public class ItemList : ScriptableObject
 {
-    [SerializeField] private List<Item> list; // ¾ÆÀÌÅÛ ¸®½ºÆ®
+    [SerializeField] private List<Item> list; // ì•„ì´í…œ ë¦¬ìŠ¤íŠ¸
 
     public List<Item> List { get => list; set => list = value; }
 }

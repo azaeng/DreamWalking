@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class HandType : MonoBehaviour
 {
-    // ÇÚµå Å¸ÀÔ
+    // ì† íƒ€ì…
     public enum HAND_TYPE { LEFT, RIGHT };
 
     [SerializeField] private MeleeWeapon[] meleeWeapon;

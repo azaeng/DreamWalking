@@ -3,13 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// ¾ÆÀÌÅÛ Á¤º¸ ±¸Á¶Ã¼
+// ì•„ì´í…œ ì •ë³´ë¥¼ ë‹´ëŠ” êµ¬ì¡°ì²´
 [Serializable]
 public struct ItemInfo
 {
-    // ¾ÆÀÌÅÛ Å¸ÀÔ
+    // ì•„ì´í…œ íƒ€ì… (ì˜ˆ: ë¬´ê¸°, ë°©ì–´êµ¬ ë“±)
     public EnumTypes.ITEM_TYPE ItemType;
 
-    // ¾ÆÀÌÅÛ ¾ÆÀÌµğ
+    // ì•„ì´í…œ ê³ ìœ  ID
     public int ItemId;
 }
