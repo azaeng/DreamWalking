@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5da5e7d4e911d6469e21aed159bdb35, type: 3}
+  m_Name: Aerondight
+  m_EditorClassIdentifier: 
+  itemType: 0
+  itemId: 1003
+  itemName: "\uC5D0\uC774\uB860 \uB2E4\uC774\uD2B8"
+  itemDescription: "\uB4E4\uB9AC\uB294 \uC18C\uBB38\uC73C\uB85C\uB294 \uD638\uC218\uC758
+    \uC815\uB839\uC5D0\uAC8C \uBC1B\uC744 \uC218 \uC788\uB2E4\uB294 \uC804\uC124\uC758
+    \uC740\uAC80\uC785\uB2C8\uB2E4."
+  itemIconIamge: {fileID: 21300000, guid: edf92a9292bdb4d1c95712c5e092e5ac, type: 3}
+  itemPrice: 10000
+  itemCount: 0
+  isEquip: 0
+  wpType: 0
+  attackSpeed: 0.7
+  damage: 15
+  equipParentTag: RightHand
+  wpPrefabs:
+  - {fileID: 919132149155446097, guid: be0c20147f3f20b40a62ca9ee8755f65, type: 3}
