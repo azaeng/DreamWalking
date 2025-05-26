@@ -10,6 +10,8 @@ public class Obstacle : MonoBehaviourPun
     private GameObject Player;       // 내 플레이어 오브젝트
     private GameObject myTurnObj;    // 내 턴 UI 오브젝트 (활성/비활성 모두 포함)
 
+    private static bool isRemoved = false; // 한 턴에 한 번만 제거 가능
+
     void Start()
     {
         StartCoroutine(InitPlayerAndTurnObj());
@@ -18,10 +20,7 @@ public class Obstacle : MonoBehaviourPun
     private System.Collections.IEnumerator InitPlayerAndTurnObj()
     {
         // 내 플레이어 오브젝트가 생성될 때까지 대기
-        while (PlayerSpawner.MyPlayerObject == null)
-        {
-            yield return null;
-        }
+        while (PlayerSpawner.MyPlayerObject == null) { yield return null; }
 
         Player = PlayerSpawner.MyPlayerObject;
 
@@ -70,6 +69,12 @@ public class Obstacle : MonoBehaviourPun
             return;
         }
 
+        if (isRemoved) // 이미 제거했으면 리턴
+        {
+            Debug.LogWarning("이번 턴에는 이미 제거했습니다.");
+            return;
+        }
+
         if (storedObstacles.Count >= 3)
         {
             Debug.LogWarning("이미 최대 3개의 장애물을 제거했습니다.");
@@ -79,6 +84,8 @@ public class Obstacle : MonoBehaviourPun
         // 장애물 저장 및 제거
         storedObstacles.Add(gameObject);
         photonView.RPC("RequestDestroy", RpcTarget.MasterClient, photonView.ViewID);
+
+        isRemoved = true; // 한 턴에 한 번만 제거되도록 설정
     }
 
     [PunRPC]
@@ -89,5 +96,11 @@ public class Obstacle : MonoBehaviourPun
         {
             PhotonNetwork.Destroy(targetView.gameObject);
         }
+    }
+    
+    // 외부에서 이 메서드를 호출해 턴이 시작될 때 플래그를 초기화
+    public static void ResetObstacleRemovalFlag()
+    {
+        isRemoved = false;
     }
 }

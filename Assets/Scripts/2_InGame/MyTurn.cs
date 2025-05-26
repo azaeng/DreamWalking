@@ -1,4 +1,5 @@
 using Photon.Pun;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,6 +11,11 @@ public class MyTurn : MonoBehaviourPun
     public Image Dice_1;        // 주사위 1 이미지
     public Image Dice_2;        // 주사위 2 이미지
     public Sprite[] diceSprites;    // 주사위 눈 1~6 이미지 배열
+
+    private Animator DiceAni_1; // 애니메이터
+    private Animator DiceAni_2;
+    RectTransform rt1; // 주사위 위치
+    RectTransform rt2;
     private int dice1Value;
     private int dice2Value;
 
@@ -18,6 +24,21 @@ public class MyTurn : MonoBehaviourPun
         // 턴 종료 버튼 클릭 시 이벤트 연결
         Btn_Rolling.onClick.AddListener(Rolling);   // 주사위 굴리기
         Btn_End.onClick.AddListener(EndTurn);       // 턴 종료
+
+        // Animator 가져오기
+        if (Dice_1 != null && Dice_2 != null)
+        {
+            DiceAni_1 = Dice_1.GetComponent<Animator>();
+            DiceAni_2 = Dice_2.GetComponent<Animator>();
+        }
+
+        // RectTransform을 통해 위치 초기화
+        rt1 = Dice_1.GetComponent<RectTransform>();
+        rt2 = Dice_2.GetComponent<RectTransform>();
+
+        // 시작 시 애니메이터 비활성화
+        DiceAni_1.enabled = false;
+        DiceAni_2.enabled = false;
     }
 
     // 오브젝트가 활성화될 때 자동 호출
@@ -28,11 +49,26 @@ public class MyTurn : MonoBehaviourPun
             Btn_Rolling.gameObject.SetActive(true);
             // Btn_Rolling.interactable = true;
         }
-        if (Btn_End != null) {Btn_End.gameObject.SetActive(false);}
+        if (Btn_End != null) { Btn_End.gameObject.SetActive(false); }
+
+        Obstacle.ResetObstacleRemovalFlag();
+
+        if (rt1 != null) rt1.anchoredPosition = new Vector2(rt1.anchoredPosition.x, -300f);
+        if (rt2 != null) rt2.anchoredPosition = new Vector2(rt2.anchoredPosition.x, -300f);
     }
 
     void Rolling()
     {
+        // 주사위 애니메이션 재생
+        if (DiceAni_1 != null && DiceAni_2)
+        {
+            DiceAni_1.enabled = true;
+            DiceAni_2.enabled = true;
+
+            DiceAni_1.Play("주사위 1", 0, 0f); // 애니메이션 처음부터 재생
+            DiceAni_2.Play("주사위 2", 0, 0f);
+        }
+
         // 랜덤 숫자 생성 (1~6)
         dice1Value = Random.Range(0, 6);
         dice2Value = Random.Range(0, 6);
