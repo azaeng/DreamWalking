@@ -26,15 +26,13 @@ public class MyTurn : MonoBehaviourPun
         if (Btn_Rolling != null)
         {
             Btn_Rolling.gameObject.SetActive(true);
-            Btn_Rolling.interactable = true;
+            // Btn_Rolling.interactable = true;
         }
         if (Btn_End != null) {Btn_End.gameObject.SetActive(false);}
     }
 
     void Rolling()
     {
-        Btn_Rolling.interactable = false;
-
         // 랜덤 숫자 생성 (1~6)
         dice1Value = Random.Range(0, 6);
         dice2Value = Random.Range(0, 6);
@@ -48,6 +46,7 @@ public class MyTurn : MonoBehaviourPun
 
         Btn_Rolling.gameObject.SetActive(false);  // 주사위 버튼 비활성화
         Btn_End.gameObject.SetActive(true);       // 턴 종료 버튼 활성화
+        // Btn_Rolling.interactable = false;
     }
 
     void EndTurn()

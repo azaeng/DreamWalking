@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 public class TurnManager : MonoBehaviourPunCallbacks
 {
-    public GameObject MyTrun;    // 현재 턴인 플레이어에게만 활성화 오브젝트
+    public GameObject MyTurn;    // 현재 턴인 플레이어에게만 활성화 오브젝트
     public Text turnInfoText;    // 현재 턴 정보 표시용 UI 텍스트
 
     private List<Player> turnOrder = new List<Player>(); // 턴 순서를 저장하는 리스트
@@ -25,7 +25,7 @@ public class TurnManager : MonoBehaviourPunCallbacks
     void Update()
     {
         // 내 턴이고 MyTrun이 꺼졌으면 턴 종료
-        if (IsMyTurn() && MyTrun != null && !MyTrun.activeSelf && !hasEndedTurn)
+        if (IsMyTurn() && MyTurn != null && !MyTurn.activeSelf && !hasEndedTurn)
         {
             hasEndedTurn = true;
             photonView.RPC("NextTurn", RpcTarget.AllBuffered);
@@ -88,9 +88,9 @@ public class TurnManager : MonoBehaviourPunCallbacks
             bool isMyTurn = PhotonNetwork.LocalPlayer.ActorNumber == currentPlayer.ActorNumber;
             turnInfoText.text = isMyTurn ? $"당신의 턴입니다 ({playerName})" : $"{playerName}의 턴입니다";
 
-            if (MyTrun != null)
+            if (MyTurn != null)
             {
-                MyTrun.SetActive(isMyTurn);
+                MyTurn.SetActive(isMyTurn);
             }
         }
     }

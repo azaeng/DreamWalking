@@ -589,7 +589,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3224161031209135856}
   - component: {fileID: 8726786623151275374}
-  - component: {fileID: 3756836878191890443}
+  - component: {fileID: 8409461597117168650}
   m_Layer: 0
   m_Name: Template_Character
   m_TagString: Untagged
@@ -714,7 +714,7 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.32357794, y: -0.00013250113, z: 0.11798656}
     m_Extent: {x: 0.90660065, y: 1.0545394, z: 0.4322363}
   m_DirtyAABB: 0
---- !u!114 &3756836878191890443
+--- !u!114 &8409461597117168650
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1184,7 +1184,7 @@ GameObject:
   - component: {fileID: 3392954217936211512}
   m_Layer: 0
   m_Name: "\uD50C\uB808\uC774\uC5B4"
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
