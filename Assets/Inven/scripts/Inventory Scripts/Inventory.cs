@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Search;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,11 +11,10 @@ public class Inventory : MonoBehaviour
 
     [SerializeField] InventorySlot[] inventorySlots;
 
-    [SerializeField] Transform draggablesTransform; // µå·¡±× ÁßÀÎ ¾ÆÀÌÅÛÀÇ ºÎ¸ğ Transform
-    [SerializeField] InventoryItem itemPrefab; // ÀÎº¥Åä¸® ¾ÆÀÌÅÛ ÇÁ¸®ÆÕ
-    [SerializeField] Item[] items; // ¸ğµç ¾ÆÀÌÅÛ ScriptableObject ¹è¿­
-    [SerializeField] Button giveItemBtn; // ¾ÆÀÌÅÛ »ı¼º µğ¹ö±× ¹öÆ°
-
+    [SerializeField] Transform draggablesTransform; // ë“œë˜ê·¸ë˜ëŠ” ì•„ì´í…œë“¤ì˜ ë¶€ëª¨ Transform
+    [SerializeField] InventoryItem itemPrefab; // ì¸ë²¤í† ë¦¬ ì•„ì´í…œ í”„ë¦¬íŒ¹
+    [SerializeField] Item[] items; // ìƒì„± ê°€ëŠ¥í•œ ì•„ì´í…œ ScriptableObject ë°°ì—´
+    [SerializeField] Button giveItemBtn; // ì•„ì´í…œì„ ì§€ê¸‰í•˜ëŠ” ë²„íŠ¼
 
     void Awake()
     {
@@ -24,7 +22,7 @@ public class Inventory : MonoBehaviour
         giveItemBtn.onClick.AddListener(delegate { SpawnInventoryItem(); });
     }
 
-    // ÀÎº¥Åä¸® ¾ÆÀÌÅÛÀ» »ı¼ºÇÏ°í ºó ½½·Ô¿¡ ¹èÄ¡
+    // ì¸ë²¤í† ë¦¬ ìŠ¬ë¡¯ì— ì•„ì´í…œì„ ìƒì„±í•˜ê³  ì²« ë¹ˆ ìŠ¬ë¡¯ì— ë°°ì¹˜
     public void SpawnInventoryItem(Item item = null)
     {
         Item _item = item;
@@ -38,7 +36,7 @@ public class Inventory : MonoBehaviour
         {
             if (inventorySlots[i].myItem == null)
             {
-                // ¾ÆÀÌÅÛ ÇÁ¸®ÆÕÀ» ÀÎ½ºÅÏ½ºÈ­ÇÏ°í ÃÊ±âÈ­
+                // ì¸ë²¤í† ë¦¬ ì•„ì´í…œì„ ì¸ìŠ¤í„´ìŠ¤í™”í•˜ê³  ì´ˆê¸°í™”
                 Instantiate(itemPrefab, inventorySlots[i].transform).Initialize(_item, inventorySlots[i]);
                 break;
             }
@@ -58,7 +56,7 @@ public class Inventory : MonoBehaviour
         ItemTooltipManager.Instance?.ShowTooltip(carriedItem.myItem);
     }
 
-    // ¾ÆÀÌÅÛÀ» "µé°í ÀÖ´Â »óÅÂ"·Î ¸¸µê
+    // ì•„ì´í…œì„ "ë“¤ê³  ìˆëŠ” ìƒíƒœ"ë¡œ ì„¤ì •
     public void SetCarriedItem(InventoryItem item)
     {
         if (carriedItem != null)
@@ -78,7 +76,7 @@ public class Inventory : MonoBehaviour
         ItemTooltipManager.Instance?.ShowTooltip(carriedItem.myItem);
     }
 
-    // Àåºñ ÀåÂø ¶Ç´Â ÇØÁ¦
+    // ì¥ë¹„ ì¥ì°© ë˜ëŠ” í•´ì œ
     public void EquipEquipment(SlotTag tag, InventoryItem item = null)
     {
         switch (tag)
