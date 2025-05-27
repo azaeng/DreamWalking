@@ -5,15 +5,20 @@ using UnityEngine.UI;
 
 public class MyTurn : MonoBehaviourPun
 {
-    public Button Btn_Rolling;  // 주사위 버튼
-    public Button Btn_End;      // 턴 종료 버튼
+    public Button Btn_Rolling;      // 주사위 버튼
+    public Button Btn_End;          // 턴 종료 버튼
 
-    public Image Dice_1;        // 주사위 1 이미지
-    public Image Dice_2;        // 주사위 2 이미지
+    public GameObject DiceP_1;        // 주사위 1
+    public GameObject DiceP_2;       // 주사위 2
     public Sprite[] diceSprites;    // 주사위 눈 1~6 이미지 배열
 
-    private Animator DiceAni_1; // 애니메이터
+    private Image Dice_1;
+    private Image Dice_2;
+    private Animator DiceAni_1;
     private Animator DiceAni_2;
+    private GameObject dice1Obj;
+    private GameObject dice2Obj;
+
     private int dice1Value;
     private int dice2Value;
 
@@ -22,17 +27,6 @@ public class MyTurn : MonoBehaviourPun
         // 턴 종료 버튼 클릭 시 이벤트 연결
         Btn_Rolling.onClick.AddListener(Rolling);   // 주사위 굴리기
         Btn_End.onClick.AddListener(EndTurn);       // 턴 종료
-
-        // Animator 가져오기
-        if (Dice_1 != null && Dice_2 != null)
-        {
-            DiceAni_1 = Dice_1.GetComponent<Animator>();
-            DiceAni_2 = Dice_2.GetComponent<Animator>();
-        }
-
-        // 시작 시 애니메이터 비활성화
-        DiceAni_1.enabled = false;
-        DiceAni_2.enabled = false;
     }
 
     // 오브젝트가 활성화될 때 자동 호출
@@ -46,32 +40,30 @@ public class MyTurn : MonoBehaviourPun
         if (Btn_End != null) { Btn_End.gameObject.SetActive(false); }
 
         Obstacle.ResetObstacleRemovalFlag();
-
-        // 주사위 위치 초기화
-        if (Dice_1 != null)
-        {
-            Vector3 pos = Dice_1.rectTransform.anchoredPosition;
-            Dice_1.rectTransform.anchoredPosition = new Vector2(pos.x, -300f);
-        }
-
-        if (Dice_2 != null)
-        {
-            Vector3 pos = Dice_2.rectTransform.anchoredPosition;
-            Dice_2.rectTransform.anchoredPosition = new Vector2(pos.x, -300f);
-        }
     }
 
     void Rolling()
     {
-        // 주사위 애니메이션 재생
-        if (DiceAni_1 != null && DiceAni_2)
+        Transform parent = GameObject.Find("Dice")?.transform;
+        if (parent == null)
         {
-            DiceAni_1.enabled = true;
-            DiceAni_2.enabled = true;
-
-            // DiceAni_1.Play("Dice 1", 0, 0f); // 애니메이션 처음부터 재생
-            // DiceAni_2.Play("Dice 2", 0, 0f);
+            Debug.LogError("Dice 부모 오브젝트가 존재하지 않습니다.");
+            return;
         }
+
+        // 기존 오브젝트 제거
+        if (dice1Obj != null) Destroy(dice1Obj);
+        if (dice2Obj != null) Destroy(dice2Obj);
+
+        // 프리팹 인스턴스화
+        dice1Obj = Instantiate(DiceP_1, parent);
+        dice2Obj = Instantiate(DiceP_2, parent);
+
+        Dice_1 = dice1Obj.GetComponent<Image>();
+        Dice_2 = dice2Obj.GetComponent<Image>();
+
+        DiceAni_1 = dice1Obj.GetComponent<Animator>();
+        DiceAni_2 = dice2Obj.GetComponent<Animator>();
 
         // 랜덤 숫자 생성 (1~6)
         dice1Value = Random.Range(0, 6);
