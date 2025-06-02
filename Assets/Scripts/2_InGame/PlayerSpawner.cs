@@ -56,6 +56,7 @@ public class PlayerSpawner : MonoBehaviourPunCallbacks
                     {
                         renderer.material.color = Color.red;
                     }
+                    PhotonNetwork.LocalPlayer.TagObject = MyPlayerObject;
                 }
             }
         }

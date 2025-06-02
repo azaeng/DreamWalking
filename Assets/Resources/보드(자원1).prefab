@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 647094775941216428}
   - component: {fileID: -4163817638345875099}
+  - component: {fileID: 7051824109056953616}
   m_Layer: 0
   m_Name: "\uBCF4\uB4DC(\uC790\uC6D01)"
   m_TagString: Untagged
@@ -56,6 +57,18 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &7051824109056953616
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 537900356143569303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d3aaf1eb933ced4d8b69297bdb0ad95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1204985462282561157
 GameObject:
   m_ObjectHideFlags: 0
@@ -68,6 +81,7 @@ GameObject:
   - component: {fileID: 310818584783444314}
   - component: {fileID: 2798872185462037019}
   - component: {fileID: 8576223003575589713}
+  - component: {fileID: 9027987536001450187}
   m_Layer: 0
   m_Name: Circle
   m_TagString: Untagged
@@ -162,6 +176,18 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -2124705421725058983, guid: 9486f53c40f809a458ac297349bb5629, type: 3}
+--- !u!114 &9027987536001450187
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1204985462282561157}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d3aaf1eb933ced4d8b69297bdb0ad95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1215551469842808541
 GameObject:
   m_ObjectHideFlags: 0
